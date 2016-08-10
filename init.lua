@@ -9,6 +9,10 @@ local player_spam = {}
 local CHAR_REPEAT_MAX = 4
 
 minetest.register_on_chat_message(function(name, msg)
+	-- players with no shout priv shouldn't say anything on chat
+	 if not minetest.check_player_privs(name, { shout = true }) then
+	 	return false 
+	 end
 	local count_as_messages = math.max(1, math.min(msg:len() / 100, 5))
     player_spam[name] = (player_spam[name] or 0) + math.floor(count_as_messages + 0.5) 
 
